@@ -16,5 +16,6 @@ A 20% of the original dataset was used for evalution. The same Enconder and Bina
 The model was evaluated using precision, recall and F-Beta Score. The values are as follows: Precision: 0.74, Recall: 0.64, F-Beta:0.69. 
 
 ## Ethical Considerations
-Bias    
+Aequitas Bias Analysis shows the presence of bias at the unsupervised and supervised level, which indicates unfairness in the underlying data and the model trained using it.    
 ## Caveats and Recommendations
+NA

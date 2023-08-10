@@ -54,6 +54,13 @@ if __name__ == "__main__":
     print(compute_model_metrics(y_test, preds))
     pickle.dump({"model":model,"encoder":encoder, "lb":lb}, open("model/model.pkl", "wb"))
 
+    # Generate Predictions on Training Data
+    train_preds = inference(model, X_train)
+    train.reset_index(drop=True, inplace=True)
+    bias_analysis_df = pd.concat([train, pd.DataFrame(y_train, columns=["label_value"]),
+        pd.DataFrame(train_preds, columns=["score"])], axis=1)
+    bias_analysis_df.to_csv("bias_analysis_data.csv")
+
     # Testing the model on Slice of data
     with open("results/slice_output.txt", "w") as f_out:
         for cat in cat_features:
@@ -61,8 +68,9 @@ if __name__ == "__main__":
             results = calculate_slice_performance(
                 model, test, cat, encoder, lb)
             for cat_value, metrics in results.items():
-                f_out.write(f"{cat_value}: ")
+                f_out.write(f"{cat_value}:\n")
                 for m, v in metrics.items():
                     f_out.write(f"{m}:{v:.2f} ")
 
-                f_out.write("\n")
+                f_out.write("\n"+"-"*30+"\n")
+            f_out.write("\n")
