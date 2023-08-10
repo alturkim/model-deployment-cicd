@@ -1,6 +1,16 @@
 import numpy as np
 from sklearn.preprocessing import LabelBinarizer, OneHotEncoder
 
+def clean(df):
+    df = df.rename(columns={i:i.strip() for i in df.columns})
+    str_cols = ["workclass", "education", "marital-status", "occupation",
+        "relationship", "race", "sex", "native-country", "salary"]
+    df = df.astype({col:"string" for col in str_cols})
+    for col in str_cols:
+        df[col] = df[col].str.strip()
+    df = df.replace("?", np.nan)
+    df = df.dropna()
+    return df
 
 def process_data(
     X, categorical_features=[], label=None, training=True, encoder=None, lb=None
@@ -53,7 +63,7 @@ def process_data(
     X_categorical = X[categorical_features].values
     X_continuous = X.drop(*[categorical_features], axis=1)
 
-    if training is True:
+    if training:
         encoder = OneHotEncoder(sparse=False, handle_unknown="ignore")
         lb = LabelBinarizer()
         X_categorical = encoder.fit_transform(X_categorical)
