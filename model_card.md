@@ -18,4 +18,4 @@ The model was evaluated using precision, recall and F-Beta Score. The values are
 ## Ethical Considerations
 Aequitas Bias Analysis shows the presence of bias at the unsupervised and supervised level, which indicates unfairness in the underlying data and the model trained using it.    
 ## Caveats and Recommendations
-NA
+The modeling and training strategy was kept simple, since the focus of this project is the MLOps, specially deployment aspects. Therefore, the model predictions should not be considered for real-life scenarios that might affect individuals.
